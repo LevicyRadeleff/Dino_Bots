@@ -8,4 +8,5 @@
 #include <MsgBoxConstants.au3>
 #include <WinAPIFiles.au3>
 
-Runwait(@ComSpec & " /c " & Chr(34) & @ScriptDir & "\stacksEditor.py" & Chr(34), @ScriptDir)
+;Runwait(@ComSpec & "/c" & ">" & Chr(34) & @ScriptDir & "\stacksEditor.py" & Chr(34), @ScriptDir)
+ShellExecuteWait(@ScriptDir & "\stacksEditor.py")

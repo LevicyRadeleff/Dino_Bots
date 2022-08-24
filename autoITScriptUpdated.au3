@@ -90,7 +90,7 @@ Func fRemoveAllStacks()
     FileClose($htempTxt)
 
     sleep(400)
-    Runwait(@ComSpec & " /c " & Chr(34) & @ScriptDir & "\stacksEditor.py" & Chr(34), @ScriptDir)
+    ShellExecuteWait(@ScriptDir & "\stacksEditor.py")
     sleep(400)
 
 EndFunc

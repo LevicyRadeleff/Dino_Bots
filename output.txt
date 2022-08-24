@@ -1,0 +1,4 @@
+!addbal <@1234> 200000
+!adddino <@1234> RexAdultS male -140
+!adddino <@1234> GigaAdultS male -45
+!adddino <@1234> Spino male -1
