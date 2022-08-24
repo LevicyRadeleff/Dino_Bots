@@ -101,28 +101,6 @@ sleep(400)
 Runwait(@ComSpec & " /c " & Chr(34) & @ScriptDir & "\stacksEditor.py" & Chr(34), @ScriptDir)
 EndFunc
 
-Func fRunOutput()
-Local $i
-
-$hOutputFile = FileOpen("output.txt", $FO_READ + $FO_FULLFILE_DETECT)
-
-MsgBox ($MB_OK, "Completion", "Process Done, beginning discord input. Please click okay, then select the text input box on discord.")
-
-sleep(10000)
-
-For $i = 1 To _FileCountLines($hOutputFile)
-    $line = FileReadLine($hOutputFile, $i)
-    send("{!}a" & $line)
-    send(Chr(10))
-    sleep(2000)
-Next
-
-FileClose($hOutputFile)
-
-MsgBox($MB_OK, "Success", "Process Complete, all dino deals sorted.")
-
-EndFunc
-
 Func fDonator()
 
 EndFunc
