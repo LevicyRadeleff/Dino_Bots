@@ -21,7 +21,7 @@ Func fMain()
     $FirstBox = GUICreate("Program Choice", 200, 200)
     GUICtrlCreateLabel("What would you like to", 10, 1)
     GUICtrlCreateLabel("do today?", 10, 20)
-    $Button1 = GUICtrlCreateButton("Edit Stacks", 50, 50, 100, 25, $WS_GROUP)
+    $Button1 = GUICtrlCreateButton("Remove Stacks", 50, 50, 100, 25, $WS_GROUP)
     $Button2 = GUICtrlCreateButton("Manage Giveaways", 50, 75, 100, 25, $WS_GROUP)
     $Button3 = GUICtrlCreateButton("Handle Donator Dinos", 37, 100, 125, 25, $WS_GROUP)
     $Button4 = GUICtrlCreateButton("Cancel", 50, 125, 100, 25, $WS_GROUP)
@@ -34,7 +34,7 @@ Func fMain()
                 Exit
             Case $Button1
                 GUISetState(@SW_HIDE)
-                fEditStacks() ;This runs the old code, which allows the user's stacks to be edited. Really only useful for staff
+                fRemoveAllStacks() ;This runs the old code, which allows the user's stacks to be edited. Really only useful for staff
                 fRunOutput() ;This prints out the output file. All things before here should successfully edit the output file.
                 ExitLoop
             Case $Button2
@@ -53,35 +53,8 @@ EndFunc
 
 Func fRemoveAllStacks()
 $discordID = InputBox("Discord ID", "Enter the users Discord ID")
-$number = InputBox("Total Dino Amount", "How many of each dino to give to the user?")
-
-$BalanceBox = GUICreate("Edit User Balance", 200, 150)
-GUICtrlCreateLabel("Do you want to manage this", 10, 1)
-GUICtrlCreateLabel("user's balance?", 10, 20)
-$Button8 = GUICtrlCreateButton("Add 10,000 gold", 50, 50, 100, 25, $WS_GROUP)
-$Button9 = GUICtrlCreateButton("Add Total Dino Inventory", 25, 75, 150, 25, $WS_GROUP)
-$Button10 = GUICtrlCreateButton("Do Not Edit", 50, 100, 100, 25, $WS_GROUP)
-GUISetState(@SW_SHOW)
-
-While 1
-    $nMsg = GUIGetMsg()
-    Switch $nMsg
-        Case $GUI_EVENT_CLOSE
-            Exit
-        Case $Button8
-            $sBal = 1
-            GUISetState(@SW_HIDE)
-            ExitLoop
-        Case $Button9
-            $sBal = 2
-            GUISetState(@SW_HIDE)
-            ExitLoop
-        Case $Button10
-            $sBal = 0
-            GUISetState(@SW_HIDE)
-            ExitLoop
-    EndSwitch
-WEnd
+$number = 0
+$sBal = 4
 
 $DinoBox = GUICreate("User Dino InputBox", 633, 447)
 $UserDinoInput = GUICtrlCreateEdit("", 32, 24, 569, 353)
@@ -119,14 +92,13 @@ FileWrite($htempTxt, $sBal & Chr(10))
 ;dino.txt
 ;DiscordID
 ;Number
-;0/1/2 (No Change, 10k, Pay for all Dinos)
+;0/1/2 (No Change, 10k, Pay for all Dinos), 4 (200k)
 ;
 
 FileClose($htempTxt)
 
 sleep(400)
 Runwait(@ComSpec & " /c " & Chr(34) & @ScriptDir & "\stacksEditor.py" & Chr(34), @ScriptDir)
-sleep(400)
 EndFunc
 
 Func fRunOutput()
@@ -314,84 +286,6 @@ EndFunc
 
 Func fGiveStuff()
 
-EndFunc
-
-Func fEditStacks()
-    $discordID = InputBox("Discord ID", "Enter the users Discord ID")
-    $number = InputBox("Total Dino Amount", "How many of each dino to give to the user?")
-
-    $BalanceBox = GUICreate("Edit User Balance", 200, 150)
-    GUICtrlCreateLabel("Do you want to manage this", 10, 1)
-    GUICtrlCreateLabel("user's balance?", 10, 20)
-    $Button8 = GUICtrlCreateButton("Add 10,000 gold", 50, 50, 100, 25, $WS_GROUP)
-    $Button9 = GUICtrlCreateButton("Add Total Dino Inventory", 25, 75, 150, 25, $WS_GROUP)
-    $Button10 = GUICtrlCreateButton("Do Not Edit", 50, 100, 100, 25, $WS_GROUP)
-    GUISetState(@SW_SHOW)
-
-    While 1
-        $nMsg = GUIGetMsg()
-        Switch $nMsg
-            Case $GUI_EVENT_CLOSE
-                Exit
-            Case $Button8
-                $sBal = 1
-                GUISetState(@SW_HIDE)
-                ExitLoop
-            Case $Button9
-                $sBal = 2
-                GUISetState(@SW_HIDE)
-                ExitLoop
-            Case $Button10
-                $sBal = 0
-                GUISetState(@SW_HIDE)
-                ExitLoop
-        EndSwitch
-    WEnd
-
-    $DinoBox = GUICreate("User Dino InputBox", 633, 447)
-    $UserDinoInput = GUICtrlCreateEdit("", 32, 24, 569, 353)
-    GUICtrlSetData(-1, "Copy & Paste User Dino List Here")
-    $Button11 = GUICtrlCreateButton("OK", 32, 400, 113, 25, $WS_GROUP)
-    $Button12 = GUICtrlCreateButton("Cancel", 480, 400, 121, 25, $WS_GROUP)
-    GUISetState(@SW_SHOW)
-
-    While 1
-        $nMsg = GUIGetMsg()
-        Switch $nMsg
-            Case $GUI_EVENT_CLOSE
-                Exit
-            Case $Button11
-                $sUserDinoInput_Value = GUICtrlRead($UserDinoInput)
-                GUISetState(@SW_HIDE)
-                ExitLoop
-            Case $Button12
-                Exit
-        EndSwitch
-    WEnd
-
-    $huserInfo = FileOpen("userInfo.txt", 2)
-
-    FileWrite($huserInfo, $sUserDinoInput_Value & Chr(10))
-    FileClose($huserInfo)
-
-    $htempTxt = FileOpen("tempFile.txt", 2)
-
-    FileWrite($htempTxt, $discordID & Chr(10))
-    FileWrite($htempTxt, $number & Chr(10))
-    FileWrite($htempTxt, $sBal & Chr(10))
-
-    ;TempFile.txt:
-    ;dino.txt
-    ;DiscordID
-    ;Number
-    ;0/1/2 (No Change, 10k, Pay for all Dinos)
-    ;
-
-    FileClose($htempTxt)
-
-    sleep(400)
-    Runwait(@ComSpec & " /c " & Chr(34) & @ScriptDir & "\stacksEditor.py" & Chr(34), @ScriptDir)
-    sleep(400)
 EndFunc
 
 Func fRunOutput()
