@@ -77,14 +77,17 @@ elif addBalFlag == 2:
                 #print(totalBalAdd)
                 break
     output.write("!addbal <@" + str(userID) + "> "+ str(totalBalAdd) + '\n')
+elif addBalFlag == 4:
+	output.write("!addbal <@" + str(userID) + "> 200000" + '\n')
 
 
 for item in dinoContent:
     output.write("!adddino <@" + str(userID) + "> " + item + " " + str(userValue) + '\n')
 
-for item in zippedFile:
-    if item[1] != 0:
-        output.write("!adddino <@" + str(userID) + "> " + item[0] + " " + str(item[1]) + '\n')
+if addBalFlag not 4:
+	for item in zippedFile:
+	    if item[1] != 0:
+	        output.write("!adddino <@" + str(userID) + "> " + item[0] + " " + str(item[1]) + '\n')
 
 output.close()
 
