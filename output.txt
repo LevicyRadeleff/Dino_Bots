@@ -1,1 +1,4 @@
-testing
+!addbal <@467> 200000
+!adddino <@467> RexAdultS male -40
+!adddino <@467> GigaAdultS male -45
+!adddino <@467> Spino male -48

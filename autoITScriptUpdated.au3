@@ -52,56 +52,51 @@ Func fMain()
 EndFunc
 
 Func fRemoveAllStacks()
-$discordID = InputBox("Discord ID", "Enter the users Discord ID")
-$number = 0
-$sBal = 4
+    $discordID = InputBox("Discord ID", "Enter the users Discord ID")
 
-$DinoBox = GUICreate("User Dino InputBox", 633, 447)
-$UserDinoInput = GUICtrlCreateEdit("", 32, 24, 569, 353)
-GUICtrlSetData(-1, "Copy & Paste User Dino List Here")
-$Button11 = GUICtrlCreateButton("OK", 32, 400, 113, 25, $WS_GROUP)
-$Button12 = GUICtrlCreateButton("Cancel", 480, 400, 121, 25, $WS_GROUP)
-GUISetState(@SW_SHOW)
+    $DinoBox = GUICreate("User Dino InputBox", 633, 447)
+    $UserDinoInput = GUICtrlCreateEdit("", 32, 24, 569, 353)
+    GUICtrlSetData(-1, "Copy & Paste User Dino List Here")
+    $Button11 = GUICtrlCreateButton("OK", 32, 400, 113, 25, $WS_GROUP)
+    $Button12 = GUICtrlCreateButton("Cancel", 480, 400, 121, 25, $WS_GROUP)
+    GUISetState(@SW_SHOW)
 
-While 1
-    $nMsg = GUIGetMsg()
-    Switch $nMsg
-        Case $GUI_EVENT_CLOSE
-            Exit
-        Case $Button11
-            $sUserDinoInput_Value = GUICtrlRead($UserDinoInput)
-            GUISetState(@SW_HIDE)
-            ExitLoop
-        Case $Button12
-            Exit
-    EndSwitch
-WEnd
+    While 1
+        $nMsg = GUIGetMsg()
+        Switch $nMsg
+            Case $GUI_EVENT_CLOSE
+                Exit
+            Case $Button11
+                $sUserDinoInput_Value = GUICtrlRead($UserDinoInput)
+                GUISetState(@SW_HIDE)
+                ExitLoop
+            Case $Button12
+                Exit
+        EndSwitch
+    WEnd
 
-$huserInfo = FileOpen("userInfo.txt", 2)
+    $huserInfo = FileOpen("userInfo.txt", 2)
 
-FileWrite($huserInfo, $sUserDinoInput_Value & Chr(10))
-FileClose($huserInfo)
+    FileWrite($huserInfo, $sUserDinoInput_Value & Chr(10))
+    FileClose($huserInfo)
 
-$htempTxt = FileOpen("tempFile.txt", 2)
+    $htempTxt = FileOpen("tempFile.txt", 2)
 
-FileWrite($htempTxt, $discordID & Chr(10))
-FileWrite($htempTxt, $number & Chr(10))
-FileWrite($htempTxt, $sBal & Chr(10))
+    FileWrite($htempTxt, $discordID & Chr(10))
 
-;TempFile.txt:
-;dino.txt
-;DiscordID
-;Number
-;0/1/2 (No Change, 10k, Pay for all Dinos), 4 (200k)
-;
+    ;TempFile.txt:
+    ;DiscordID
 
-FileClose($htempTxt)
+    FileClose($htempTxt)
 
-sleep(400)
-Runwait(@ComSpec & " /c " & Chr(34) & @ScriptDir & "\stacksEditor.py" & Chr(34), @ScriptDir)
+    sleep(400)
+    Runwait(@ComSpec & " /c " & Chr(34) & @ScriptDir & "\stacksEditor.py" & Chr(34), @ScriptDir)
+
 EndFunc
 
 Func fDonator()
+
+    MsgBox($MB_OK, "Why", "Please don't touch this button")
 
 EndFunc
 
@@ -260,9 +255,13 @@ EndFunc
 
 Func fAddToTempFile()
 
+    MsgBox($MB_OK, "Why", "Please don't touch this button")
+
 EndFunc
 
 Func fGiveStuff()
+
+    MsgBox($MB_OK, "Why", "Please don't touch this button")
 
 EndFunc
 
@@ -284,6 +283,25 @@ Func fRunOutput()
 
     FileClose($hOutputFile)
 
-    MsgBox($MB_OK, "Success", "Process Complete, all dino deals sorted.")
+    $EndBox = GUICreate("Run Again?", 200, 200)
+    GUICtrlCreateLabel("Would you like to run", 10, 1)
+    GUICtrlCreateLabel("another program again?", 10, 20)
+    $Button1 = GUICtrlCreateButton("Yes", 50, 50, 100, 25, $WS_GROUP)
+    $Button2 = GUICtrlCreateButton("No", 50, 75, 100, 25, $WS_GROUP)
+    GUISetState(@SW_SHOW)
+
+    While 1
+        $nMsg = GUIGetMsg()
+        Switch $nMsg
+            Case $GUI_EVENT_CLOSE
+                Exit
+            Case $Button1 ;Yes
+                GUISetState(@SW_HIDE)
+                fMain()
+                ExitLoop
+            Case $Button2 ;No
+                Exit
+        EndSwitch
+    WEnd
 
 EndFunc
