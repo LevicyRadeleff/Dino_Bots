@@ -91,6 +91,7 @@ Func fRemoveAllStacks()
 
     sleep(400)
     Runwait(@ComSpec & " /c " & Chr(34) & @ScriptDir & "\stacksEditor.py" & Chr(34), @ScriptDir)
+    sleep(400)
 
 EndFunc
 

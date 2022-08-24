@@ -46,7 +46,7 @@ content = list(map(lambda x: x.replace(":female_sign:", "female"), content)) #re
 content = list(map(lambda x: x.replace(":male_sign:", "male"), content))
 content = list(map(lambda x: x[:-1], content)) #get rid of training \n
 
-dinoValueList = list(map(lambda x: int(x[-3:]) if x[-3:].isdigit() else int(x[-2:]), content)) #save owned numbers to a list
+dinoValueList = list(map(lambda x: int(x[-3:]) if x[-3:].isdigit() else int(x[-2:] if x[-1:].isdigit() else 1), content)) #save owned numbers to a list
 dinoValueList = list(map(lambda x: -1 * int(x), dinoValueList))
 
 content = list(map(lambda x: ''.join([i for i in x if not i.isdigit()]), content)) #get rid of extra numbers
